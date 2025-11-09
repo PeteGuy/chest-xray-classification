@@ -12,6 +12,12 @@ import numpy as np
 
 # Input should be an image ready to be processed by our model
 def get_attention_on_image(model:nn.Module,input:torch.Tensor):
+    '''
+    Used in the api to get the attention on an image
+    :param model: usually our resnet18 model instance
+    :param input: image on which to perfom gradcam
+    :return: the combination of the base image and the gradcam visualization on top
+    '''
     target_layers = [dict(model.named_modules())["layer4.1.c2"]]
     targets = None
     cam = GradCAM(model, target_layers)
@@ -28,7 +34,7 @@ if __name__ == "__main__":
     target_layers = [dict(model.named_modules())["layer4.1.c2"]]
     stretch_resize = False
 
-    a_reg_transforms = getAlbumentationTransforms(False,stretch_resize)
+    a_reg_transforms = get_albumentation_transforms(False, stretch_resize)
 
     img_path = "data/raw/test/PNEUMONIA/person1_virus_7.jpeg"
     #img_path = "./person1_virus_6.jpeg"

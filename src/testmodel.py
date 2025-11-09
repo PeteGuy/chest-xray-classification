@@ -4,7 +4,9 @@ from torch.utils.data import DataLoader
 from sklearn.metrics import recall_score,precision_score,accuracy_score
 import torch
 
-
+'''
+Simple script to get the metrics on a particular model iteration
+'''
 
 data_path = "data/raw"
 
@@ -15,7 +17,7 @@ threshold = 0.8
 model = ResnetNN()
 model.load_state_dict(torch.load(f'models/{model_path}'))
 stretch_resize = False
-a_reg_transforms = getAlbumentationTransforms(False,False)
+a_reg_transforms = get_albumentation_transforms(False, False)
 test_set = XrayDataset(f"{data_path}/test", a_reg_transforms)
 test_loader = DataLoader(test_set,128)
 model.eval()

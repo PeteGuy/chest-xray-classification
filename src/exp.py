@@ -102,8 +102,8 @@ print("Stretch resize is: ",stretch_resize)
 print("Use pretrained: ",use_pretrained)
 
 
-a_train_transforms = getAlbumentationTransforms(True,stretch_resize)
-a_reg_transforms = getAlbumentationTransforms(False, stretch_resize)
+a_train_transforms = get_albumentation_transforms(True, stretch_resize)
+a_reg_transforms = get_albumentation_transforms(False, stretch_resize)
 
 #data_path = "../data/raw"
 data_path = "data/raw"

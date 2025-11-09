@@ -28,6 +28,12 @@ def test_metadata():
     (test_file_bad, False, 422, ["detail"])
 ])
 def test_predict(file_path,show_attention,status_code,json_response_keys):
+    '''
+    :param file_path: path of the file, can be either our test image or a bad file expected to fail
+    :param show_attention:
+    :param status_code: expected status code
+    :param json_response_keys: expected result keys
+    '''
     with open(file_path,"rb") as f:
         body = {"file":f}
         response = client.post("/predict",files=body,params={"show_attention":show_attention})
@@ -50,6 +56,13 @@ def test_predict(file_path,show_attention,status_code,json_response_keys):
 
 ])
 def test_predict_batch(files_paths,status_code,keys,sub_keys,num_good_files):
+    '''
+    :param files_paths: 3 files to be used
+    :param status_code: expected status code
+    :param keys: expected keys
+    :param sub_keys: expected subkeys
+    :param num_good_files: number of results we expect, if one or more of the file is bad (not jpeg or png) we should not return a score for it in our results
+    '''
     with open(files_paths[0],"rb") as f1:
         with open(files_paths[1], "rb") as f2:
             with open(files_paths[2], "rb") as f3:

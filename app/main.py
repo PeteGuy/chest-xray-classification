@@ -42,7 +42,7 @@ torch.set_grad_enabled(False)
 #device = "cuda" if torch.cuda.is_available() else "cpu"
 device = "cpu"
 model.to(device)
-a_transforms = getAlbumentationTransforms(training=False,stretch=False)
+a_transforms = get_albumentation_transforms(training=False, stretch=False)
 
 old_stdout = sys.stdout # backup current stdout
 sys.stdout = open(os.devnull, "w")
@@ -89,7 +89,10 @@ async def hello():
 
 @app.get("/metadata")
 async def get_model_metadata(get_summary:Annotated[bool,Query(description="Determines whether the torchinfo summary which is rather large is sent in the response.")] = False):
-
+    '''
+    :param get_summary: whether to return a torchinfo summary of the model
+    :return: Basic data about the model used
+    '''
     result = {"Model":"ResNet-18",
             "Training specifications":"40 epochs, finetuning over image-net backbone, binary sigmoid classification over chest Xray images",
             "Metrics used":"Precision, recall"
@@ -100,6 +103,12 @@ async def get_model_metadata(get_summary:Annotated[bool,Query(description="Deter
 
 @app.get("/image/{image_name}")
 async def get_image(image_name:str,background_tasks: BackgroundTasks):
+    '''
+
+    :param image_name: The name of the image inside of the tmp_images folder
+    :param background_tasks: used to delete the image after it's used once
+    :return: an image
+    '''
     file_path = os.path.join(tmp_images,image_name)
     if not os.path.exists(file_path):
         raise HTTPException(status_code=404,detail="Image not found, note that images get deleted after being seen once.")
@@ -112,6 +121,12 @@ async def get_image(image_name:str,background_tasks: BackgroundTasks):
 
 @app.post("/predict/")
 async def predict(request: Request,file: UploadFile, show_attention:Annotated[bool,Query(description="If this is true, we return an image showing the attention of the model using the gradcam method.")]=False):
+    '''
+    :param request:
+    :param file: the image to be classified, should be a png or jpeg image of the xray of a torso
+    :param show_attention: whether to send back url to the image after gradcam was applied to it
+    :return: the sigmoid score of the model, the class and potentially a url
+    '''
     if file.content_type.strip() != "image/jpeg" and file.content_type.strip() != "image/png":
         raise HTTPException(status_code=422,detail="Invalid content type, file must be an image of type jpeg or png")
     img_str = await file.read()
@@ -141,6 +156,10 @@ async def predict(request: Request,file: UploadFile, show_attention:Annotated[bo
 
 @app.post("/predict_batch/")
 async def predict(files: list[UploadFile]):
+    '''
+    :param files:
+    :return: a list where each entry contains a filename, a class and a score for the corresponding image
+    '''
     # Turn the files of type jpeg or png into arrays to be processed, ignore the incorrect types
     files_array = [(f.filename,np.frombuffer(await f.read(),np.uint8)) for f in files if f.content_type.strip() == "image/jpeg" or f.content_type.strip() == "image/png"]
     if len(files_array) == 0:

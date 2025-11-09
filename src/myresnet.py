@@ -85,6 +85,11 @@ class ResnetNN(nn.Module):
         return Z
 
     def freeze_backbone(self,verbose=False):
+        '''
+        Prevents the backbone from being modified by training, allows to focus training on the fully connected classification layer
+        :param verbose: allows to check in console whether parameters were correctly frozen
+        :return:
+        '''
         for name,parameter in self.named_parameters():
             if parameter.requires_grad and "head" not in name:
                 parameter.requires_grad = False

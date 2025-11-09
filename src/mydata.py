@@ -38,7 +38,13 @@ class XrayDataset(Dataset):
         return augmented["image"], self.labels[idx]
 
 ############################## New transforms using albumentation ######################
-def getAlbumentationTransforms(training=False,stretch=False):
+def get_albumentation_transforms(training=False, stretch=False):
+    '''
+    function to get the transforms data processing
+    :param training: whether the transforms are for a training set or not, if True adds data augmentation
+    :param stretch: whether we resize the images be stretching them or we use square padding to preserve aspect ratio
+    :return:
+    '''
     if stretch:
         resize_transform = A.Resize(input_size, input_size)
     else:
