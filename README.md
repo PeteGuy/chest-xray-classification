@@ -54,15 +54,20 @@ Final metrics: Recall = 0.95, Precision = 0.87 (using an arbitrary threshold of 
 ## Gradcam
 As we know modern deep learning model can show behaviors that are hard to decipher. Some methods were developped to offer a way to visalize their inner workings, gradcam is used to visualize on an image the weight of each pixels in the final result. I used it here to familiarize myself with it and to verify that the model was generalizing correctly.
 
-<p style="float: left;">
-<img src="images/person1_virus_7.jpeg" alt="X-ray of a person suffering from pneumonia" width="49%"/>
-<img src="images/gradcamcv.png" alt="Gradcam used on the final layer of the resnet18 backbone" width="49%"/>
-</p>
-![Image One](images/person1_virus_7.jpeg)
-*X-ray of a person suffering from pneumonia*
 
-![Image Two](images/gradcamcv.png)
-*Gradcam used on the final layer of the resnet18 backbone*
+  <b>Figure 1: X-ray of a person suffering from pneumonia</b>
+
+  
+  <img src="images/person1_virus_7.jpeg" alt="X-ray of a person suffering from pneumonia" width="400"/>
+
+  
+  <b>Figure 2: Gradcam used on the final layer of the resnet18 backbone</b>
+
+  
+  <img src="images/gradcamcv.png" alt="Gradcam used on the final layer of the resnet18 backbone" width="400"/>
+
+
+
 
 
 ## Future improvements
