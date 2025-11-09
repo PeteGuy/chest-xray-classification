@@ -2,6 +2,7 @@
 # Chest-xray API
 
 **Tech stack:** PyTorch · FastAPI · Docker · Albumentations · Pytest
+
 Python version : 3.10.12
 
 This project is a binary image classifier built with the ResNet-18 architecture. Its purpose was to gain a deeper understanding of machine learning as part of a complete development and deployment pipeline. After training the model, I created an API using FastAPI and containerized the application with Docker for deployment.
