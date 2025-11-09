@@ -15,7 +15,7 @@ def test_metadata():
     assert response.status_code == 200
     assert response.json() == {"Model":"ResNet-18",
             "Training specifications":"40 epochs, finetuning over image-net backbone, binary sigmoid classification over chest Xray images",
-            "Test set metrics":"To be filled"
+            "Metrics used":"Precision, recall"
             }
     response = client.get("/metadata?get_summary=True")
     assert response.status_code == 200

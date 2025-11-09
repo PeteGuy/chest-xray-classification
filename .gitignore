@@ -6,3 +6,5 @@ tmp_images/
 logging.txt
 __pycache__
 .idea
+app/__pycache__
+src/__pycache__
